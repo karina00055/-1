@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KarinaFashionOutlet - Магазин одягу</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #0abab5; /* Tiffany цвет */
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            background-color: #13b7b0; /* Tiffany темный */
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff6347; /* Оранжевый */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1, h2 {
+            color: #003366; /* Синий цвет для заголовков */
+        }
+
+        .product {
+            display: inline-block;
+            width: 22%;
+            margin: 20px 1%;
+            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .product h3 {
+            font-size: 18px;
+            color: #003366;
+            margin: 10px 0;
+        }
+
+        .product .price {
+            color: #ff6347;
+            font-size: 1.4em;
+            margin: 10px 0;
+        }
+
+        .product .button {
+            background-color: #13b7b0; /* Tiffany темный */
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product .button:hover {
+            background-color: #ff6347;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            text-align: center;
+            width: 50%;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            color: #003366;
+        }
+
+        .close {
+            background-color: #ff6347;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .close:hover {
+            background-color: #003366;
+        }
+
+        /* Slider styles */
+        .slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 1s ease;
+        }
+
+        .slider-container img {
+            flex: 0 0 100%;
+            border-radius: 8px;
+        }
+
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider-button.prev {
+            left: 10px;
+        }
+
+        .slider-button.next {
+            right: 10px;
+        }
+
+        /* Section with models */
+        .models-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .models-section h2 {
+            color: #003366;
+        }
+
+        .model {
+            display: inline-block;
+            width: 30%;
+            margin: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .model img {
+            width: 100%;
+            height: auto;
+        }
+
+        .model .description {
+            padding: 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .model .description h3 {
+            color: #003366;
+        }
+
+        /* Scroll effect for models */
+        .models-section .model:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Reviews section */
+        .reviews-section {
+            background-color: #f8f8f8;
+            padding: 40px 20px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .reviews-section h2 {
+            color: #003366;
+            margin-bottom: 40px;
+        }
+
+        .review {
+            display: inline-block;
+            width: 30%;
+            margin: 20px;
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .review img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .review .reviewer-name {
+            font-weight: bold;
+            color: #003366;
+        }
+
+        .review .review-text {
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .footer {
+            background-color: #0abab5;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .footer p {
+            margin: 5px;
+        }
+
+        .footer .contact-info {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .product {
+                width: 48%;
+            }
+
+            .model {
+                width: 45%;
+            }
+
+            .review {
+                width: 45%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product {
+                width: 100%;
+                margin: 20px 0;
+            }
+
+            .model {
+                width: 100%;
+                margin: 20px 0;
+            }
+
+            .review {
+                width: 100%;
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>KarinaFashionOutlet - Магазин одягу</h1>
+</header>
+
+<nav>
+    <a href="#" onclick="showAbout()">Про нас</a>
+    <a href="#" onclick="showContacts()">Контакти</a>
+    <a href="#" onclick="showProducts()">Продукти</a>
+</nav>
+
+<div class="container">
+    <h2>Гарячі пропозиції</h2>
+
+    <div class="slider">
+        <div class="slider-container">
+            <img src="images/топ т1.webp"?text=Топові+товари" alt="Sale Image 1">
+            <div style="position: absolute; top: 20px; left: 20px; font-size: 40px; font-weight: bold; color: black;">
+                KarinaFashionOutlet
+            </div>
+            <img src="images/топ т 2.jpg"?text=Топові+товари+KarinaFashionOutlet" alt="Sale Image 2">
+            <img src="images/топ т 3.jpg"?text=Ексклюзивні пропозиції" alt="Sale Image 3">
+        </div>
+        <button class="slider-button prev" onclick="moveSlider(-1)">&#10094;</button>
+        <button class="slider-button next" onclick="moveSlider(1)">&#10095;</button>
+    </div>
+
+    <div id="about" class="modal">
+        <div class="modal-content">
+            <h2>Про нас</h2>
+            <p>Ми – номер один на ринку одягу! У нас найдешевші ціни, найкраща якість та найкращі постачальники.</p>
+            <button class="close" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="contact" class="modal">
+        <div class="modal-content">
+            <h2>Контакти</h2>
+            <p>Наш номер: +380123456789</p>
+            <p>Наша пошта: KarinaFashionOutlet@gmail.com</p>
+			Наша адреса: Одеса, вул. Пушкіна, 45 </p>
+            <button class="close" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <div id="products" class="modal">
+        <div class="modal-content">
+            <h2>Наши продукти</h2>
+            <div class="product">
+                <img src="images/хит1.webp"?text=Одежда+1" alt="Товар 1">
+                <h3>Стильна футболка</h3>
+                <p class="price">₴1500</p>
+                <button class="button">Купити</button>
+            </div>
+            <div class="product">
+                <img src="images/хит2.webp" alt="Товар 2">
+                <h3>Елегантна сукня</h3>
+                <p class="price">₴2500</p>
+                <button class="button">Купити</button>
+            </div>
+            <div class="product">
+                <img src="images/хит3.jpg" alt="Товар 3">
+                <h3>Джинси</h3>
+                <p class="price">₴2000</p>
+                <button class="button">Купити</button>
+            </div>
+            <button class="close" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Секция с моделями -->
+<div class="models-section">
+    <h2>Наші моделі</h2>
+
+    <div class="model">
+        <img src="images/модели.jpg"?text=Модель+1" alt="Модель 1">
+        <div class="description">
+            <h3>Модний одяг для осені</h3>
+            <p>Сучасні тренди з яскравими квітами та незвичайними принтами.</p>
+        </div>
+    </div>
+
+    <div class="model">
+        <img src="images/модели 2.jpg"?text=Модель+2" alt="Модель 2">
+        <div class="description">
+            <h3>Легкий одяг для літа</h3>
+            <p>Зручність та стиль у кожній деталі!</p>
+        </div>
+    </div>
+
+    <div class="model">
+        <img src="images/модели 3.jpg"?text=Модель+3" alt="Модель 3">
+        <div class="description">
+            <h3>Стиль для будь-якого випадку</h3>
+            <p>Елегантність та комфорт у кожній моделі.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Отзывы -->
+<div class="reviews-section">
+    <h2>Відгуки наших покупців</h2>
+    <div class="review">
+        <img src="images/отзывы1.webp" alt="Customer 1">
+        <div class="reviewer-name">Ганна П.</div>
+        <div class="review-text">Дуже задоволена покупкою! Футболка сидить ідеально, матеріал чудової якості.</div>
+    </div>
+    <div class="review">
+        <img src="images/отзывы2.jpeg" alt="Customer 2">
+        <div class="reviewer-name">Iгор М.</div>
+        <div class="review-text">Куртка просто супер! Швидко прийшла, якісна та стильна.</div>
+    </div>
+    <div class="review">
+        <img src="images/отзывы 3.jpg" alt="Customer 3">
+        <div class="reviewer-name">Олена В.</div>
+        <div class="review-text">Чудове обслуговування! Товар відповідає опису, швидка доставка.</div>
+    </div>
+</div>
+
+<!-- Footer with contact info -->
+<div class="footer">
+    <div class="contact-info">
+        <p>Наш номер: +380123456789</p>
+            <p>Наша пошта: KarinaFashionOutlet@gmail.com</p>
+			Наша адреса: Одеса, вул. Пушкіна, 45 </p>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider-container img');
+
+    function moveSlider(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        document.querySelector('.slider-container').style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    function showAbout() {
+        document.getElementById('about').style.display = 'flex';
+    }
+
+    function showContacts() {
+        document.getElementById('contact').style.display = 'flex';
+    }
+
+    function showProducts() {
+        document.getElementById('products').style.display = 'flex';
+    }
+
+    function closeModal() {
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => modal.style.display = 'none');
+    }
+</script>
+
+</body>
+</html>
